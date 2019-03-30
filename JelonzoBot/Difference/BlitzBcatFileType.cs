@@ -9,8 +9,9 @@ namespace JelonzoBot.Difference
         FestivalIconTexture,
         FestivalPanelTexture,
         FestivalDeliModel,
+        FestivalDeliGraffitiSettings,
         FestivalDeliLayout,
-        FestivalGrafittiSettings,
+        FestivalDeliGrafitti,
         DummyFile,
         Unknown
     }
