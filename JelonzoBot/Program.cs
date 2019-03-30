@@ -18,6 +18,7 @@ using BcatBotFramework.Core.Config.Twitter;
 using BcatBotFramework.Social.Twitter;
 using BcatBotFramework.Internationalization;
 using JelonzoBot.Core.Config;
+using JelonzoBot.Scheduler.Job;
 
 namespace JelonzoBot
 {
@@ -134,20 +135,11 @@ namespace JelonzoBot
                 await Task.Delay(1000);
             }
 
-            // Schedule BCAT job in production
-            if (Configuration.LoadedConfiguration.IsProduction)
-            {
-                //await QuartzScheduler.ScheduleJob<BcatCheckerJob>("Regular", Configuration.LoadedConfiguration.JobSchedules["Bcat"]);
-            }
-
-            // Schedule the recurring housekeeping job
-            //await QuartzScheduler.ScheduleJob<RecurringHousekeepingJob>("Regular", Configuration.LoadedConfiguration.JobSchedules["Housekeeping"]);
-
             // Print out to the logging channel that we're initialized
             await DiscordBot.LoggingChannel.SendMessageAsync("\\*\\*\\* **Initialized**");
 
             // Schedule the BootHousekeepingJob
-            //await QuartzScheduler.ScheduleJob<BootHousekeepingJob>("Immediate");
+            await QuartzScheduler.ScheduleJob<JelonzoBotBootHousekeepingJob>("Immediate");
             
             await Task.Delay(-1);
 
