@@ -19,6 +19,8 @@ using BcatBotFramework.Social.Twitter;
 using BcatBotFramework.Internationalization;
 using JelonzoBot.Core.Config;
 using JelonzoBot.Scheduler.Job;
+using Nintendo.Blitz;
+using JelonzoBot.Core;
 
 namespace JelonzoBot
 {
@@ -35,6 +37,13 @@ namespace JelonzoBot
         public static string LOCAL_EXCEPTION_LOGS_DIRECTORY = Path.Combine(LOCAL_DIRECTORY, "ExceptionLogs");
 
         public static string FOLDER_DATE_TIME_FORMAT = "yyyy-MM-dd-HH-mm";
+
+        public static Dictionary<RomType, BcatPair> BcatPairs = new Dictionary<RomType, BcatPair>()
+        {
+            { RomType.NorthAmerica, new BcatPair("01003bc0000a0000","de13a4a0894bba7308ccc5c2fd5cd6f8e4ebded4dbd1131b6608ddfc7f1f8231") },
+            { RomType.Europe, new BcatPair("0100f8f0000a2000", "09f9013710ff0e58c900a6c8e19381f42b7a94d8f8d5ff9c3af9f153a397556f") },
+            { RomType.Japan, new BcatPair("01003c700009c000", "292bad61c9f52d7fd505dc8d7c4076afb23d7c3b49d36b042f490bee7ec6f5e0") }
+        };
         
         static async Task Main(string[] args)
         {
