@@ -18,6 +18,21 @@ namespace Nintendo.Blitz.Bcat
             // Parse and return as UTC time
             return DateTime.Parse(str).ToUniversalTime();
         }
+
+        public static object GetEnumValueFromString(Type enumType, string str)
+        {
+            object value;
+            if (Enum.TryParse(enumType, str, out value))
+            {
+                return value;
+            }
+            else if (Enum.TryParse(enumType, $"c{str}", out value))
+            {
+                return value;
+            }
+
+            throw new Exception("Unknown enum value " + str + " for " + enumType.Name);
+        }
         
     }
 }
