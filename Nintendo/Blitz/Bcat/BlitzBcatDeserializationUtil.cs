@@ -33,6 +33,11 @@ namespace Nintendo.Blitz.Bcat
 
             throw new Exception("Unknown enum value " + str + " for " + enumType.Name);
         }
+
+        public static float GetValueAsFloat(object obj)
+        {
+            return (obj as float?) ?? Convert.ToSingle(obj);
+        }
         
     }
 }
