@@ -2,8 +2,8 @@ namespace JelonzoBot.Difference
 {
     public enum FileType : int
     {
-        VSSetting = 0,
-        SalmonRunSchedule,
+        VersusSetting = 0,
+        CoopSetting,
         FestivalByaml,
         FestivalHapTexture,
         FestivalIconTexture,

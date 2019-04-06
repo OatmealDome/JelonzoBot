@@ -6,7 +6,7 @@ namespace JelonzoBot.Difference
         {
             if (path.StartsWith("vsdata/VSSetting"))
             {
-                return FileType.VSSetting;
+                return FileType.VersusSetting;
             }
 
             if (path.StartsWith("fesdata/Fld_Deli"))
@@ -28,7 +28,7 @@ namespace JelonzoBot.Difference
             switch (path)
             {
                 case "coopdata/CoopSetting.byaml":
-                    return FileType.SalmonRunSchedule;
+                    return FileType.CoopSetting;
                 case "fesdata/Festival.byaml":
                     return FileType.FestivalByaml;
                 case "fesdata/Grf_Deli_Fes.Nin_NX_NVN.szs":
