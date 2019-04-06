@@ -1,49 +1,49 @@
 namespace JelonzoBot.Difference
 {
-    public class BlitzBcatFileTypeExtensions
+    public class FileTypeExtensions
     {
-        public BlitzBcatFileType GetTypeFromFilePath(string path)
+        public FileType GetTypeFromFilePath(string path)
         {
             if (path.StartsWith("vsdata/VSSetting"))
             {
-                return BlitzBcatFileType.VSSetting;
+                return FileType.VSSetting;
             }
 
             if (path.StartsWith("fesdata/Fld_Deli"))
             {
                 if (path.EndsWith("NVN.szs"))
                 {
-                    return BlitzBcatFileType.FestivalDeliModel;
+                    return FileType.FestivalDeliModel;
                 }
                 else if (path.EndsWith("bprm"))
                 {
-                    return BlitzBcatFileType.FestivalDeliGraffitiSettings;
+                    return FileType.FestivalDeliGraffitiSettings;
                 }
                 else if (path.EndsWith("Vss.szs"))
                 {
-                    return BlitzBcatFileType.FestivalDeliLayout;
+                    return FileType.FestivalDeliLayout;
                 }
             }
 
             switch (path)
             {
                 case "coopdata/CoopSetting.byaml":
-                    return BlitzBcatFileType.SalmonRunSchedule;
+                    return FileType.SalmonRunSchedule;
                 case "fesdata/Festival.byaml":
-                    return BlitzBcatFileType.FestivalByaml;
+                    return FileType.FestivalByaml;
                 case "fesdata/Grf_Deli_Fes.Nin_NX_NVN.szs":
-                    return BlitzBcatFileType.FestivalDeliGrafitti;
+                    return FileType.FestivalDeliGrafitti;
                 case "fesdata/HapTexture.bfres":
-                    return BlitzBcatFileType.FestivalHapTexture;
+                    return FileType.FestivalHapTexture;
                 case "fesdata/IconTexture.bfres":
-                    return BlitzBcatFileType.FestivalIconTexture;
+                    return FileType.FestivalIconTexture;
                 case "fesdata/PanelTexture.bfres":
-                    return BlitzBcatFileType.FestivalPanelTexture;
+                    return FileType.FestivalPanelTexture;
                 case "dummy/dummy.txt":
-                    return BlitzBcatFileType.DummyFile;
+                    return FileType.DummyFile;
             }
 
-            return BlitzBcatFileType.Unknown;
+            return FileType.Unknown;
         }
         
     }

@@ -1,6 +1,6 @@
 namespace JelonzoBot.Difference
 {
-    public enum BlitzBcatFileType : int
+    public enum FileType : int
     {
         VSSetting = 0,
         SalmonRunSchedule,

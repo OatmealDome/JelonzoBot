@@ -10,7 +10,7 @@ namespace JelonzoBot.Difference
 
         }
 
-        public JelonzoBotDifferenceHandlerAttribute(BlitzBcatFileType type, DifferenceType differenceType, int priority) 
+        public JelonzoBotDifferenceHandlerAttribute(FileType type, DifferenceType differenceType, int priority) 
             : base((int)type, differenceType, priority)
         {
 
