@@ -1,6 +1,6 @@
 using Syroot.NintenTools.Byaml.Serialization;
 
-namespace NIntendo.Blitz.Bcat.Festival
+namespace Nintendo.Blitz.Bcat.Festival
 {
     [ByamlObject]
     public class Weighting

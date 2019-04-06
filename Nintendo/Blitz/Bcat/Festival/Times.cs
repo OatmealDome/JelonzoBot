@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Nintendo.Blitz.Bcat;
 using Syroot.NintenTools.Byaml.Serialization;
 
-namespace NIntendo.Blitz.Bcat.Festival
+namespace Nintendo.Blitz.Bcat.Festival
 {
     [ByamlObject]
     public class Times : IByamlSerializable

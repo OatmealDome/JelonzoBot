@@ -5,7 +5,7 @@ using Nintendo.Bcat;
 using Nintendo.Blitz.Bcat;
 using Syroot.NintenTools.Byaml.Serialization;
 
-namespace NIntendo.Blitz.Bcat.Festival
+namespace Nintendo.Blitz.Bcat.Festival
 {
     [ByamlObject]
     public class Team : IByamlSerializable

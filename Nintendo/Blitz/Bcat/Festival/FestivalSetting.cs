@@ -6,7 +6,7 @@ using Nintendo.Blitz.News;
 using Nintendo.Blitz.News.Command;
 using Syroot.NintenTools.Byaml.Serialization;
 
-namespace NIntendo.Blitz.Bcat.Festival
+namespace Nintendo.Blitz.Bcat.Festival
 {
     [ByamlObject]
     public class FestivalSetting : IByamlSerializable
