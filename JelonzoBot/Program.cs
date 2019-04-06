@@ -94,6 +94,7 @@ namespace JelonzoBot
                 configuration.TwitterConfig = new TwitterConfig();
                 configuration.TwitterConfig.TwitterCredentials = new Dictionary<string, CachedTwitterCredentials>();
                 configuration.TwitterConfig.CharacterCounterBinary = "/home/oatmealdome/characterCounter";
+                configuration.LastDownloadPaths = new Dictionary<RomType, string>();
                 configuration.TwitterConfig.IsActivated = true;
                 configuration.FirstRunCompleted = false;
 
