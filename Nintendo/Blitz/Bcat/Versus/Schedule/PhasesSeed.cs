@@ -78,7 +78,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Schedule
                 foreach (KeyValuePair<string, object> pair in sourceDict)
                 {
                     // Get the VersusRule enum
-                    VersusRule VersusRule = (VersusRule)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
+                    VersusRule VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
 
                     // Create a new RandomizerSeed instance and deserialize
                     RandomizerSeed randomizerSeed = new RandomizerSeed();
@@ -106,7 +106,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Schedule
                 foreach (KeyValuePair<string, object> pair in sourceDict)
                 {
                     // Get the VersusRule enum
-                    VersusRule VersusRule = (VersusRule)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
+                    VersusRule VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
 
                     // Add this to the target dictionary
                     targetDict.Add(VersusRule, (int)pair.Value);

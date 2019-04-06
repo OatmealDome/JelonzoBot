@@ -23,7 +23,7 @@ namespace Nintendo.Blitz.News
                 command = new ScriptCommand();
 
                 // Set the command type
-                command.CommandType = (CommandType)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(CommandType), (string)dict["Command"]);
+                command.CommandType = (CommandType)EnumUtil.GetEnumValueFromString(typeof(CommandType), (string)dict["Command"]);
 
                 // Return the command
                 return command;
@@ -33,7 +33,7 @@ namespace Nintendo.Blitz.News
             command = (ScriptCommand)Activator.CreateInstance(commandType);
 
             // Set the command type
-            command.CommandType = (CommandType)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(CommandType), (string)dict["Command"]);
+            command.CommandType = (CommandType)EnumUtil.GetEnumValueFromString(typeof(CommandType), (string)dict["Command"]);
 
             // Loop over every value of the command
             foreach (string key in dict.Keys)
@@ -51,7 +51,7 @@ namespace Nintendo.Blitz.News
                 if (propertyInfo.PropertyType.IsEnum)
                 {
                     // Convert the string to the enum
-                    propertyInfo.SetValue(command, BlitzBcatDeserializationUtil.GetEnumValueFromString(propertyInfo.PropertyType, (string)dict[key]));
+                    propertyInfo.SetValue(command, EnumUtil.GetEnumValueFromString(propertyInfo.PropertyType, (string)dict[key]));
                 }
                 else
                 {

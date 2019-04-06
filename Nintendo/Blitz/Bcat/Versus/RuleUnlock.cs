@@ -25,7 +25,7 @@ namespace Nintendo.Blitz.Bcat.Versus
             UnlockTime = BlitzBcatDeserializationUtil.DeserializeDateTime(dictionary["DateTime"]);
 
             // Get the enum value for the VersusRule
-            VersusRule = (VersusRule)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["VersusRule"]);
+            VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["VersusRule"]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)

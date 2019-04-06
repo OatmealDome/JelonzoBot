@@ -55,7 +55,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Parameter
                     glickoConstants.DeserializeByaml((Dictionary<string, object>)pair.Value);
 
                     // Get the VersusRule enum
-                    VersusRule VersusRule = (VersusRule)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
+                    VersusRule VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
 
                     // Add this to the target dictionary
                     constantsDict.Add(VersusRule, glickoConstants);

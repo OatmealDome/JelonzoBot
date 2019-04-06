@@ -29,7 +29,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Schedule
 
         public void DeserializeByaml(IDictionary<string, object> dictionary)
         {
-            BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["VersusRule"]);
+            EnumUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["VersusRule"]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)

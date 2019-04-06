@@ -100,7 +100,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Parameter.Udemae
                 foreach (KeyValuePair<string, object> pair in sourceDict)
                 {
                     // Get the VersusRule enum
-                    VersusRule VersusRule = (VersusRule)BlitzBcatDeserializationUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
+                    VersusRule VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), pair.Key);
 
                     // Get the list of rates
                     List<object> rates = (List<object>)pair.Value;
