@@ -2,7 +2,7 @@ namespace JelonzoBot.Difference
 {
     public class FileTypeExtensions
     {
-        public FileType GetTypeFromFilePath(string path)
+        public static FileType GetTypeFromFilePath(string path)
         {
             if (path.StartsWith("vsdata/VSSetting"))
             {
