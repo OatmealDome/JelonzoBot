@@ -11,6 +11,10 @@ namespace Nintendo.Blitz
             {
                 return value;
             }
+            else if (str.StartsWith('c') && Enum.TryParse(enumType, str.Substring(1), out value))
+            {
+                return value;
+            }
             else if (Enum.TryParse(enumType, $"c{str}", out value))
             {
                 return value;
