@@ -46,7 +46,7 @@ namespace Nintendo.Blitz.Bcat.Festival
             set;
         }
 
-        [ByamlMember]
+        [ByamlMember("Rule")]
         public string VersusRule
         {
             get;
