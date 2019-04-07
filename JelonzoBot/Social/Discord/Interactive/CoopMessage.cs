@@ -43,13 +43,18 @@ namespace JelonzoBot.Social.Discord.Interactive
             // Get the current phase
             CoopPhase phase = phases[this.CurrentPage];
 
+            // Build the weapon string
+            string weapons = string.Join('\n', phase.WeaponSets)
+                .Replace("-1", "<:sr_random:564288761182027811>") // replace with green ? emoji
+                .Replace("-2", "<:sr_grizzco_random:564292130017771520>"); // replace with golden ? emoji
+
             // Build an Embed
             Embed embed = new EmbedBuilder()
                 .WithTitle(Localizer.Localize("coop.title", language))
                 .AddField(Localizer.Localize("coop.start_time", language), phase.StartDateTime <= DateTime.UtcNow ? Localizer.Localize("coop.start_time_now", language) : Localizer.LocalizeDateTime(phase.StartDateTime, language))
                 .AddField(Localizer.Localize("coop.end_time", language), Localizer.LocalizeDateTime(phase.EndDateTime, language))
                 .AddField(Localizer.Localize("coop.stage", language), phase.StageId)
-                .AddField(Localizer.Localize("coop.weapons", language), string.Join('\n', phase.WeaponSets))
+                .AddField(Localizer.Localize("coop.weapons", language), weapons)
                 .Build();
 
             // Return the Embed in a MessageProperties
