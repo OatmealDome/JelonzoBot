@@ -68,35 +68,7 @@ namespace JelonzoBot
             {
                 // Create a new dummy Configuration
                 configuration = new JelonzoBotConfiguration();
-
-                // Set defaults
-                configuration.CdnConfig = new NintendoCdnConfig();
-                configuration.CdnConfig.SetToDefaults();
-                configuration.DiscordConfig = new DiscordConfig();
-                configuration.DiscordConfig.Token = "cafebabe";
-                configuration.DiscordConfig.ClientId = 0;
-                configuration.DiscordConfig.Permissions = 0;
-                configuration.DiscordConfig.AdministratorIds = new List<ulong>()
-                {
-                    112966101368901632, // OatmealDome
-                    180994059542855681 // Simonx22
-                };
-                configuration.DiscordConfig.LoggingTargetChannel = new GuildSettings();
-                configuration.DiscordConfig.AlternatorRate = 30;
-                configuration.DiscordConfig.CommandStatistics = new ConcurrentDictionary<string, ulong>();
-                configuration.DiscordConfig.GuildSettings = new List<GuildSettings>();
-                configuration.S3Config = new S3Config();
-                configuration.S3Config.ServiceUrl = "https://s3.example.com";
-                configuration.S3Config.BucketName = "bucket";
-                configuration.S3Config.AccessKey = "cafebabe";
-                configuration.S3Config.AccessKeySecret = "deadbeef";
-                configuration.JobSchedules = new Dictionary<string, JobSchedule>();
-                configuration.TwitterConfig = new TwitterConfig();
-                configuration.TwitterConfig.TwitterCredentials = new Dictionary<string, CachedTwitterCredentials>();
-                configuration.TwitterConfig.CharacterCounterBinary = "/home/oatmealdome/characterCounter";
-                configuration.LastDownloadPaths = new Dictionary<RomType, string>();
-                configuration.TwitterConfig.IsActivated = true;
-                configuration.FirstRunCompleted = false;
+                configuration.SetDefaults();
 
                 // Write out the default config
                 configuration.Write();
