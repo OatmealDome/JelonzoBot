@@ -11,6 +11,11 @@ namespace JelonzoBot.Core.Config
             get;
             set;
         }
-        
+
+        protected override void SetAppSpecificDefaults()
+        {
+            LastDownloadPaths = new Dictionary<RomType, string>();
+        }
+
     }
 }
