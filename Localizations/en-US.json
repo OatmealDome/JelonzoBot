@@ -32,5 +32,11 @@
     "festival.announcement_time": "Announcement",
     "festival.period": "Splatfest Period",
     "festival.period_format": "{0} to {1}",
-    "festival.results_time": "Results"
+    "festival.results_time": "Results",
+    "coop.title": "Salmon Run Rotation",
+    "coop.start_time": "Start Time",
+    "coop.end_time": "End Time",
+    "coop.start_time_now": "Currently open",
+    "coop.stage": "Stage",
+    "coop.weapons": "Weapons"
 }
