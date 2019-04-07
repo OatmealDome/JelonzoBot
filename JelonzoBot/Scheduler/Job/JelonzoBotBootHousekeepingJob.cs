@@ -1,5 +1,8 @@
 using System.Threading.Tasks;
+using BcatBotFramework.Core.Config;
+using BcatBotFramework.Scheduler;
 using BcatBotFramework.Scheduler.Job;
+using JelonzoBot.Core;
 
 namespace JelonzoBot.Scheduler.Job
 {
@@ -7,14 +10,26 @@ namespace JelonzoBot.Scheduler.Job
     {
         protected override Task RunAppSpecificBootTasks()
         {
-            // TODO
+            // Initialize the FileCache if first run is complete
+            if (Configuration.LoadedConfiguration.FirstRunCompleted)
+            {
+                FileCache.Initialize();
+            }
+
+            // No async tasks to wait on here
             return Task.FromResult(0);
         }
 
-        protected override Task SchedulePostBootJobs()
+        protected override async Task SchedulePostBootJobs()
         {
-            // TODO
-            return Task.FromResult(0);
+            if (!Configuration.LoadedConfiguration.FirstRunCompleted)
+            {
+                await QuartzScheduler.ScheduleJob<BcatFirstRunJob>("Normal");
+            }
+            else if (Configuration.LoadedConfiguration.IsProduction) 
+            {
+                await QuartzScheduler.ScheduleJob<BcatCheckerJob>("Normal", Configuration.LoadedConfiguration.JobSchedules["Bcat"]);
+            }
         }
         
     }
