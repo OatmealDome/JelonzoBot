@@ -44,7 +44,7 @@ namespace Nintendo.Blitz.Bcat.Coop
         public void DeserializeByaml(IDictionary<string, object> dictionary)
         {
             StartDateTime = BlitzBcatDeserializationUtil.DeserializeDateTime(dictionary["StartDateTime"]);
-            StartDateTime = BlitzBcatDeserializationUtil.DeserializeDateTime(dictionary["EndDateTime"]);
+            EndDateTime = BlitzBcatDeserializationUtil.DeserializeDateTime(dictionary["EndDateTime"]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)
