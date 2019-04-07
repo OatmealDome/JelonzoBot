@@ -21,7 +21,6 @@ namespace Nintendo.Blitz.Bcat.Coop
             set;
         }
 
-        [ByamlMember("GearKind")]
         public GearType GearType
         {
             get;
@@ -31,6 +30,7 @@ namespace Nintendo.Blitz.Bcat.Coop
         public void DeserializeByaml(IDictionary<string, object> dictionary)
         {
             StartDateTime = BlitzBcatDeserializationUtil.DeserializeDateTime(dictionary["DateTime"]);
+            GearType = (GearType)EnumUtil.GetEnumValueFromString(typeof(GearType), (string)dictionary["GearKind"]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)
