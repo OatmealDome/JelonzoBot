@@ -96,57 +96,63 @@ namespace JelonzoBot.Scheduler.Job
                         // Create the difference handler parameters based off the FileType and difference type
                         object[] parameters;
 
-                        // Deserialize the object from byaml if necessary
-                        object deserializedObject;
-                        using (MemoryStream memoryStream = new MemoryStream(data[differencePair.Value]))
+                        if (differencePair.Key != DifferenceType.Removed)
                         {
-                            switch (fileType)
-                            {
-                                case FileType.VersusSetting:
-                                    deserializedObject = serializer.Deserialize<VersusSetting>(memoryStream);
-                                    break;
-                                case FileType.CoopSetting:
-                                    deserializedObject = serializer.Deserialize<CoopSetting>(memoryStream);
-                                    break;
-                                case FileType.FestivalByaml:
-                                    deserializedObject = serializer.Deserialize<FestivalSetting>(memoryStream);
-                                    break;
-                                default:
-                                    deserializedObject = data[differencePair.Value];
-                                    break;
-                            }
-                        }
+                            // Get the raw file
+                            byte[] rawFile = data[differencePair.Value];
 
-                        if (differencePair.Key == DifferenceType.Added)
-                        {
-                            parameters = new object[] { bcatPairEntry.Key, data, deserializedObject };
-                        }
-                        else if (differencePair.Key == DifferenceType.Changed)
-                        {
-                            // Get the previous file
-                            object previousFile;
-                            switch (fileType)
+                            // Deserialize the object from byaml if necessary
+                            object deserializedObject;
+                            using (MemoryStream memoryStream = new MemoryStream(rawFile))
                             {
-                                case FileType.VersusSetting:
-                                    previousFile = FileCache.GetVersusSettingForRomType(bcatPairEntry.Key);
-                                    break;
-                                case FileType.CoopSetting:
-                                    previousFile = FileCache.GetCoopSetting();
-                                    break;
-                                case FileType.FestivalByaml:
-                                    previousFile = FileCache.GetLatestFestivalSettingForRomType(bcatPairEntry.Key);
-                                    break;
-                                default:
-                                    // Construct the previous file path
-                                    string previousPath = Path.Combine((Configuration.LoadedConfiguration as JelonzoBotConfiguration).LastDownloadPaths[bcatPairEntry.Key], differencePair.Value.Replace('/', Path.DirectorySeparatorChar));
-
-                                    // Load it
-                                    previousFile = File.ReadAllBytes(previousPath);;
-                                    break;
+                                switch (fileType)
+                                {
+                                    case FileType.VersusSetting:
+                                        deserializedObject = serializer.Deserialize<VersusSetting>(memoryStream);
+                                        break;
+                                    case FileType.CoopSetting:
+                                        deserializedObject = serializer.Deserialize<CoopSetting>(memoryStream);
+                                        break;
+                                    case FileType.FestivalByaml:
+                                        deserializedObject = serializer.Deserialize<FestivalSetting>(memoryStream);
+                                        break;
+                                    default:
+                                        deserializedObject = data[differencePair.Value];
+                                        break;
+                                }
                             }
 
-                            // Create the parameters
-                            parameters = new object[] { bcatPairEntry.Key, data, previousFile, deserializedObject };
+                            if (differencePair.Key == DifferenceType.Added)
+                            {
+                                parameters = new object[] { bcatPairEntry.Key, data, deserializedObject, rawFile };
+                            }
+                            else // Changed
+                            {
+                                // Get the previous file
+                                object previousFile;
+                                switch (fileType)
+                                {
+                                    case FileType.VersusSetting:
+                                        previousFile = FileCache.GetVersusSettingForRomType(bcatPairEntry.Key);
+                                        break;
+                                    case FileType.CoopSetting:
+                                        previousFile = FileCache.GetCoopSetting();
+                                        break;
+                                    case FileType.FestivalByaml:
+                                        previousFile = FileCache.GetLatestFestivalSettingForRomType(bcatPairEntry.Key);
+                                        break;
+                                    default:
+                                        // Construct the previous file path
+                                        string previousPath = Path.Combine((Configuration.LoadedConfiguration as JelonzoBotConfiguration).LastDownloadPaths[bcatPairEntry.Key], differencePair.Value.Replace('/', Path.DirectorySeparatorChar));
+
+                                        // Load it
+                                        previousFile = File.ReadAllBytes(previousPath);;
+                                        break;
+                                }
+
+                                // Create the parameters
+                                parameters = new object[] { bcatPairEntry.Key, data, previousFile, deserializedObject, rawFile };
+                            }
                         }
                         else
                         {
