@@ -1,6 +1,8 @@
+using System;
+
 namespace JelonzoBot.Difference
 {
-    public class FileTypeExtensions
+    public static class FileTypeExtensions
     {
         public static FileType GetTypeFromFilePath(string path)
         {
@@ -44,6 +46,35 @@ namespace JelonzoBot.Difference
             }
 
             return FileType.Unknown;
+        }
+
+        public static string GetPath(this FileType fileType)
+        {
+            switch (fileType)
+            {
+                case FileType.VersusSetting:
+                    return "vsdata/VSSetting_{0}.byaml";
+                case FileType.CoopSetting:
+                    return "coopdata/CoopSetting.byaml";
+                case FileType.FestivalDeliGrafitti:
+                    return "fesdata/Grf_Deli_Fes.Nin_NX_NVN.szs";
+                case FileType.FestivalHapTexture:
+                    return "fesdata/HapTexture.bfres";
+                case FileType.FestivalIconTexture:
+                    return "fesdata/IconTexture.bfres";
+                case FileType.FestivalPanelTexture:
+                    return "fesdata/PanelTexture.bfres";
+                case FileType.DummyFile:
+                    return "dummy/dummy.txt";
+                case FileType.FestivalDeliModel:
+                    return "fesdata/Fld_Deli_Octa{0}.Nin_NX_NVN.szs";
+                case FileType.FestivalDeliGraffitiSettings:
+                    return "fesdata/Fld_Deli_Octa{0}_Vss.bprm";
+                case FileType.FestivalDeliLayout:
+                    return "fesdata/Fld_Deli_Octa{0}_Vss.szs";
+                default:
+                    throw new Exception("Unknown file type");
+            }
         }
         
     }
