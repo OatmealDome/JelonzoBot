@@ -19,6 +19,7 @@ using Syroot.NintenTools.Byaml.Dynamic;
 using Syroot.BinaryData;
 using BcatBotFramework.Scheduler;
 using JelonzoBot.Core.Config;
+using Nintendo;
 
 namespace JelonzoBot.Scheduler.Job
 {
@@ -71,14 +72,11 @@ namespace JelonzoBot.Scheduler.Job
 
                                 break;
                             case FileType.FestivalByaml:
-                                using (MemoryStream memoryStream = new MemoryStream(dataPair.Value))
-                                {
-                                    // Deserialize the byaml to get the ID
-                                    dynamic byaml = ByamlFile.Load(memoryStream, byteOrder: ByteOrder.LittleEndian);
+                                // Deserialize the byaml to get the ID
+                                dynamic byaml = ByamlUtil.Load(dataPair.Value);
 
-                                    // Generate the path
-                                    path = string.Format(FileCache.FESTIVAL_SETTING_PATH, bcatPairEntry.Key.ToString(), byaml["FestivalId"]);
-                                }
+                                // Generate the path
+                                path = string.Format(FileCache.FESTIVAL_SETTING_PATH, bcatPairEntry.Key.ToString(), byaml["FestivalId"]);
 
                                 break;
                             default:
