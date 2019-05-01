@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using BcatBotFramework.Scheduler;
+using BcatBotFramework.Scheduler.Job;
 using BcatBotFramework.Social.Discord.Precondition;
 using Discord;
 using Discord.Commands;
@@ -16,7 +17,7 @@ namespace JelonzoBot.Social.Discord.Command
         {
             await Context.Channel.SendMessageAsync("**[Admin]** OK, shutting down");
 
-            await QuartzScheduler.ScheduleJob<JelonzoBotShutdownJob>("Request");
+            await QuartzScheduler.ScheduleJob<ShutdownJob>("Request");
         }
 
     }
