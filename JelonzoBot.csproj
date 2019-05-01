@@ -19,6 +19,9 @@
       <HintPath>Libraries/Syroot.BinaryData.dll</HintPath>
     </Reference>
     <PackageReference Include="Syroot.Maths" Version="1.5.1" />
+    <Reference Include="Syroot.NintenTools.NSW.Bfres">
+      <HintPath>Libraries/Syroot.NintenTools.NSW.Bfres.dll</HintPath>
+    </Reference>
     <Reference Include="Syroot.NintenTools.Byaml">
       <HintPath>Libraries/Syroot.NintenTools.Byaml.dll</HintPath>
     </Reference>
