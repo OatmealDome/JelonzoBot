@@ -106,9 +106,22 @@ namespace JelonzoBot.Core
             return FestivalSettings[romType].Where(x => x.FestivalId == id).FirstOrDefault();
         }
 
-        public static void AddNewFestivalSetting(RomType romType, FestivalSetting festivalSetting)
+        public static void AddOrUpdateFestivalSetting(RomType romType, FestivalSetting festivalSetting)
         {
-            FestivalSettings[romType].Add(festivalSetting);
+            // Check if this festival is already in the cache
+            int idx = FestivalSettings[romType].FindIndex(x => x.FestivalId == festivalSetting.FestivalId);
+
+            // Check if it hasn't been added
+            if (idx == -1)
+            {
+                // Add it
+                FestivalSettings[romType].Add(festivalSetting);
+            }
+            else
+            {
+                // Update the existing entry
+                FestivalSettings[romType][idx] = festivalSetting;
+            }
         }
 
         public static VersusSetting GetVersusSettingForRomType(RomType romType)
