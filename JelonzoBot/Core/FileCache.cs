@@ -106,7 +106,7 @@ namespace JelonzoBot.Core
             return FestivalSettings[romType].Where(x => x.FestivalId == id).FirstOrDefault();
         }
 
-        public static void AddOrUpdateFestivalSetting(RomType romType, FestivalSetting festivalSetting)
+        public static void AddOrUpdateFestivalSetting(RomType romType, FestivalSetting festivalSetting, byte[] rawSetting)
         {
             // Check if this festival is already in the cache
             int idx = FestivalSettings[romType].FindIndex(x => x.FestivalId == festivalSetting.FestivalId);
@@ -122,6 +122,12 @@ namespace JelonzoBot.Core
                 // Update the existing entry
                 FestivalSettings[romType][idx] = festivalSetting;
             }
+
+            // Construct the local path
+            string localPath = string.Format(FESTIVAL_SETTING_PATH, romType.ToString(), festivalSetting.FestivalId);
+
+            // Write out the file
+            File.WriteAllBytes(localPath, rawSetting);
         }
 
         public static VersusSetting GetVersusSettingForRomType(RomType romType)
@@ -129,9 +135,15 @@ namespace JelonzoBot.Core
             return VersusSettings[romType];
         }
 
-        public static void SetVersusSettingForRomType(RomType romType, VersusSetting versusSetting)
+        public static void SetVersusSettingForRomType(RomType romType, VersusSetting versusSetting, byte[] rawSetting)
         {
             VersusSettings[romType] = versusSetting;
+
+            // Construct the local path
+            string localPath = string.Format(VERSUS_SETTING_PATH, romType.ToString());
+
+            // Write out the file
+            File.WriteAllBytes(localPath, rawSetting);
         }
 
         public static CoopSetting GetCoopSetting()
@@ -139,9 +151,12 @@ namespace JelonzoBot.Core
             return CoopSetting;
         }
 
-        public static void SetCoopSetting(CoopSetting coopSetting)
+        public static void SetCoopSetting(CoopSetting coopSetting, byte[] rawSetting)
         {
             CoopSetting = coopSetting;
+
+            // Write out the local file
+            File.WriteAllBytes(COOP_SETTING_PATH, rawSetting);
         }
 
     }
