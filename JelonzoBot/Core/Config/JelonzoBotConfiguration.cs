@@ -14,6 +14,13 @@ namespace JelonzoBot.Core.Config
             set;
         }
 
+        [JsonProperty("Rom")]
+        public RomConfig RomConfig
+        {
+            get;
+            set;
+        }
+
         public Dictionary<RomType, string> LastDownloadPaths
         {
             get;
@@ -24,6 +31,8 @@ namespace JelonzoBot.Core.Config
         {
             WebConfig = new JelonzoBotWebConfig();
             WebConfig.SetDefaults();
+            RomConfig = new RomConfig();
+            RomConfig.SetDefaults();
             LastDownloadPaths = new Dictionary<RomType, string>();
         }
 
