@@ -46,8 +46,7 @@ namespace Nintendo.Blitz.Bcat.Festival
             set;
         }
 
-        [ByamlMember("Rule")]
-        public string VersusRule
+        public VersusRule VersusRule
         {
             get;
             set;
@@ -158,7 +157,10 @@ namespace Nintendo.Blitz.Bcat.Festival
 
         public void DeserializeByaml(IDictionary<string, object> dictionary)
         {
-            // Create the News  dictionary
+            // Deserialize the VersusRule
+            VersusRule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["Rule"]);
+            
+            // Create the News dictionary
             News = new Dictionary<string, Dictionary<Language, List<ScriptCommand>>>();
 
             // Get the news list
