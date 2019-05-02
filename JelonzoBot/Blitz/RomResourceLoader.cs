@@ -87,11 +87,28 @@ namespace JelonzoBot.Blitz
             return finalData;
         }
 
-        public static dynamic GetByaml(string romPath)
+        public static dynamic GetLocalByaml(byte[] ramByaml)
+        {
+            // Load the BYAML from a MemoryStream
+            using (MemoryStream stream = new MemoryStream(ramByaml))
+            {
+                return LoadByaml(stream);
+            }
+        }
+
+        public static dynamic GetRomByaml(string romPath)
+        {
+            // Load the BYAML from ROM
+            using (MemoryStream stream = new MemoryStream(GetFile(romPath)))
+            {
+                return LoadByaml(stream);
+            }
+        }
+
+        private static dynamic LoadByaml(Stream stream)
         {
             // Decide the course of action
             ushort firstBytes;
-            using (MemoryStream stream = new MemoryStream(GetFile(romPath)))
             using (BinaryDataReader reader = new BinaryDataReader(stream, Encoding.ASCII, true))
             using (BinaryDataWriter writer = new BinaryDataWriter(stream, Encoding.ASCII, true))
             {
