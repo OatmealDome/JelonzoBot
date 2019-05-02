@@ -101,7 +101,7 @@ namespace JelonzoBot.Blitz
 
         public static dynamic GetByamlDynamicFromRom(string romPath)
         {
-            using (Stream stream = GetFile(romPath))
+            using (Stream stream = GetRomFile(romPath))
             {
                 // Get the byaml settings
                 ByamlSettings settings = PrepareByaml(stream);
