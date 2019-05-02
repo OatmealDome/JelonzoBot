@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using BcatBotFramework.Core.Config;
 using BcatBotFramework.Scheduler;
 using BcatBotFramework.Scheduler.Job;
+using JelonzoBot.Blitz;
 using JelonzoBot.Core;
 
 namespace JelonzoBot.Scheduler.Job
@@ -15,6 +16,9 @@ namespace JelonzoBot.Scheduler.Job
             {
                 FileCache.Initialize();
             }
+
+            // Initialize the RomResourceLoader
+            RomResourceLoader.Initialize();
 
             // No async tasks to wait on here
             return Task.FromResult(0);
