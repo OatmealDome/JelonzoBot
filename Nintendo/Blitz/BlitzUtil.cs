@@ -2,7 +2,7 @@ using Nintendo.Bcat;
 
 namespace Nintendo.Blitz
 {
-    public static class BlitzInfo
+    public static class BlitzUtil
     {
         public static Language[] SupportedLanguages = 
         {
