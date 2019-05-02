@@ -39,7 +39,7 @@ namespace JelonzoBot.Blitz
             NcaWrapper.Dispose();
         }
 
-        public static byte[] GetFile(string romPath)
+        public static Stream GetFile(string romPath)
         {
             // Load the file
             IFile file = NcaWrapper.Romfs.OpenFile(romPath, OpenMode.Read);
@@ -144,10 +144,6 @@ namespace JelonzoBot.Blitz
                 {
                     throw new Exception("Not a BYAML file");
                 }
-
-                // Force version to 1
-                writer.Seek(0x2, SeekOrigin.Begin);
-                writer.Write((ushort)0x0001);
 
                 // Get the first byte at where the path array offset is
                 reader.Seek(0x10, SeekOrigin.Begin);
