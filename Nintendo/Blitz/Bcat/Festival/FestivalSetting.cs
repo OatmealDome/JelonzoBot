@@ -200,7 +200,7 @@ namespace Nintendo.Blitz.Bcat.Festival
 
             // Load the Glicko constants
             GlickoConstants = new GlickoConstants();
-            GlickoConstants.DeserializeByaml((Dictionary<string, object>)dictionary[VersusRule]);
+            GlickoConstants.DeserializeByaml((Dictionary<string, object>)dictionary[VersusRule.ToString()]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)
