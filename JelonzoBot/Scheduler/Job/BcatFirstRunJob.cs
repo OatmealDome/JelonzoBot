@@ -20,6 +20,7 @@ using Syroot.BinaryData;
 using BcatBotFramework.Scheduler;
 using JelonzoBot.Core.Config;
 using Nintendo;
+using JelonzoBot.Blitz;
 
 namespace JelonzoBot.Scheduler.Job
 {
@@ -73,7 +74,7 @@ namespace JelonzoBot.Scheduler.Job
                                 break;
                             case FileType.FestivalByaml:
                                 // Deserialize the byaml to get the ID
-                                dynamic byaml = ByamlUtil.Load(dataPair.Value);
+                                dynamic byaml = RomResourceLoader.GetByamlDynamicFromLocal(dataPair.Value);
 
                                 // Generate the path
                                 path = string.Format(FileCache.FESTIVAL_SETTING_PATH, bcatPairEntry.Key.ToString(), byaml["FestivalId"]);
