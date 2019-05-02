@@ -39,7 +39,7 @@ namespace JelonzoBot.Blitz
             NcaWrapper.Dispose();
         }
 
-        public static Stream GetFile(string romPath)
+        public static Stream GetRomFile(string romPath)
         {
             // Load the file
             IFile file = NcaWrapper.Romfs.OpenFile(romPath, OpenMode.Read);
@@ -64,34 +64,26 @@ namespace JelonzoBot.Blitz
                 stream = memoryStream;
             }
 
-            // Create a buffer stream and a place to store the final data
-            MemoryStream bufferStream = new MemoryStream();
-            byte[] finalData;
-
             try
             {
+                // Create a new MemoryStream
+                MemoryStream bufferStream = new MemoryStream();
+
                 // Attempt to Yaz0 decompress this file
                 Yaz0Compression.Decompress(stream, bufferStream);
 
-                // Set the decompresed file
-                finalData = bufferStream.ToArray();
+                // Switch the streams
+                stream.Dispose();
+                stream = bufferStream;
             }
             catch (Yaz0Exception)
             {
-                // Not a Yaz0 file, so just copy the stream into the byte array
+                // Seek back to the beginning
                 stream.Seek(0, SeekOrigin.Begin);
-                finalData = new byte[stream.Length];
-                stream.Read(finalData, 0, finalData.Length);
             }
 
-            // Dispose of the buffer stream
-            bufferStream.Dispose();
-
-            // Dispose of the input stream
-            stream.Dispose();
-
-            // Return the array
-            return finalData;
+            // Return the stream
+            return stream;
         }
 
         public static dynamic GetByamlDynamicFromLocal(byte[] ramByaml)
@@ -109,7 +101,7 @@ namespace JelonzoBot.Blitz
 
         public static dynamic GetByamlDynamicFromRom(string romPath)
         {
-            using (MemoryStream stream = new MemoryStream(GetFile(romPath)))
+            using (Stream stream = GetFile(romPath))
             {
                 // Get the byaml settings
                 ByamlSettings settings = PrepareByaml(stream);
