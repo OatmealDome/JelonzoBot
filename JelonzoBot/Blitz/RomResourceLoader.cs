@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using BcatBotFramework.Core;
@@ -14,6 +15,12 @@ namespace JelonzoBot.Blitz
 {
     public static class RomResourceLoader
     {
+        private struct ByamlSettings
+        {
+            public ByteOrder byteOrder;
+            public bool supportsPaths;
+        }
+
         private static byte[] Yaz0MagicNumbers = Encoding.ASCII.GetBytes("Yaz0");
         private static NcaWrapper NcaWrapper;
         
@@ -87,47 +94,55 @@ namespace JelonzoBot.Blitz
             return finalData;
         }
 
-        public static dynamic GetLocalByaml(byte[] ramByaml)
+        public static dynamic GetByamlDynamicFromLocal(byte[] ramByaml)
         {
             // Load the BYAML from a MemoryStream
             using (MemoryStream stream = new MemoryStream(ramByaml))
             {
-                return LoadByaml(stream);
+                // Get the byaml settings
+                ByamlSettings settings = PrepareByaml(stream);
+
+                // Read the byaml
+                return LoadByamlDynamic(settings, stream);
             }
         }
 
-        public static dynamic GetRomByaml(string romPath)
+        public static dynamic GetByamlDynamicFromRom(string romPath)
         {
-            // Load the BYAML from ROM
             using (MemoryStream stream = new MemoryStream(GetFile(romPath)))
             {
-                return LoadByaml(stream);
+                // Get the byaml settings
+                ByamlSettings settings = PrepareByaml(stream);
+
+                // Read the byaml
+                return LoadByamlDynamic(settings, stream);
             }
         }
 
-        private static dynamic LoadByaml(Stream stream)
+        private static ByamlSettings PrepareByaml(Stream stream)
         {
-            // Decide the course of action
-            ushort firstBytes;
             using (BinaryDataReader reader = new BinaryDataReader(stream, Encoding.ASCII, true))
             using (BinaryDataWriter writer = new BinaryDataWriter(stream, Encoding.ASCII, true))
             {
+                // Create a new ByamlSettings instance
+                ByamlSettings byamlSettings = new ByamlSettings();
+
                 // Read the first two bytes of the file in big endian
                 reader.ByteOrder = ByteOrder.BigEndian;
-                firstBytes = reader.ReadUInt16();
+                string byamlMagic = reader.ReadString(2);
 
                 // Check endianness
-                if (firstBytes == 0x4259) // "BY" (big endian)
+                if (byamlMagic == "BY") // "BY" (big endian)
                 {
-                    reader.ByteOrder = ByteOrder.BigEndian;
+                    byamlSettings.byteOrder = ByteOrder.BigEndian;
                 }
-                else if (firstBytes == 0x5942) // "YB" (little endian)
+                else if (byamlMagic == "YB") // "YB" (little endian)
                 {
-                    reader.ByteOrder = ByteOrder.LittleEndian;
+                    byamlSettings.byteOrder = ByteOrder.LittleEndian;
                 }
                 else // Not a byaml?
                 {
-                    return null;
+                    throw new Exception("Not a BYAML file");
                 }
 
                 // Force version to 1
@@ -136,14 +151,19 @@ namespace JelonzoBot.Blitz
 
                 // Get the first byte at where the path array offset is
                 reader.Seek(0x10, SeekOrigin.Begin);
-                byte firstByte = reader.ReadByte();
+                byamlSettings.supportsPaths = reader.ReadByte() == 0xc3;
 
                 // Seek back to the beginning
                 stream.Seek(0, SeekOrigin.Begin);
 
-                // Load the byaml
-                return ByamlFile.Load(stream, firstByte == 0xc3, reader.ByteOrder);
+                // Return the settings
+                return byamlSettings;
             }
+        }
+
+        private static dynamic LoadByamlDynamic(ByamlSettings settings, Stream stream)
+        {
+            return ByamlFile.Load(stream, settings.supportsPaths, settings.byteOrder);
         }
 
     }
