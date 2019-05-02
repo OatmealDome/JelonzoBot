@@ -48,7 +48,7 @@ namespace Nintendo.Archive
             // Create a dictionary to hold the files
             Files = new Dictionary<string, byte[]>();
 
-            using (BinaryDataReader reader = new BinaryDataReader(stream))
+            using (BinaryDataReader reader = new BinaryDataReader(stream, true))
             {
                 // Set endianness to big by default
                 reader.ByteOrder = ByteOrder.BigEndian;
