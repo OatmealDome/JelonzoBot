@@ -19,7 +19,7 @@ namespace Nintendo.Archive
 
         private Dictionary<string, byte[]> Files;
 
-        public object this[string key]
+        public byte[] this[string key]
         {
             get
             {
