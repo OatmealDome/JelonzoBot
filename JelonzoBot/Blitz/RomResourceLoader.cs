@@ -73,6 +73,9 @@ namespace JelonzoBot.Blitz
                 // Attempt to Yaz0 decompress this file
                 Yaz0Compression.Decompress(stream, bufferStream);
 
+                // Seek to the beginning
+                bufferStream.Seek(0, SeekOrigin.Begin);
+
                 // Switch the streams
                 stream.Dispose();
                 stream = bufferStream;
