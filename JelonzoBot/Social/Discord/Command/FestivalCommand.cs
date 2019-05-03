@@ -43,13 +43,14 @@ namespace JelonzoBot.Social.Discord.Command
                 .WithTitle(Localizer.Localize("festival.title", language))
                 .AddField(Localizer.Localize("festival.team_alpha", language), $"**{festivalSetting.Teams[0].Name[language]}**", true)
                 .AddField(Localizer.Localize("festival.team_bravo", language), $"**{festivalSetting.Teams[1].Name[language]}**", true)
-                .AddField(Localizer.Localize("festival.rule", language), festivalSetting.VersusRule.ToString(), true)
+                .AddField(Localizer.Localize("festival.rule", language), BlitzLocalizer.LocalizeRule(festivalSetting.VersusRule, language), true)
                 .AddField(Localizer.Localize("festival.special_stage", language), BlitzLocalizer.LocalizeStage(festivalSetting.SpecialStage, language), true);
 
             // Add the special type field if necessary
             if (festivalSetting.SpecialType != null)
             {
-                embedBuilder.AddField(Localizer.Localize("festival.special_type", language), festivalSetting.SpecialType);
+                string localizedSpecialType = Localizer.Localize(string.Format("festival.special_type.{0}", festivalSetting.SpecialType.ToLower()), language);
+                embedBuilder.AddField(Localizer.Localize("festival.special_type", language), localizedSpecialType);
             }
 
              // Continue adding fields
