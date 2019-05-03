@@ -20,5 +20,14 @@ namespace JelonzoBot.Social.Discord.Command
             await QuartzScheduler.ScheduleJob<ShutdownJob>("Request");
         }
 
+        [RequireBotAdministratorPrecondition]
+        [Command("checknow"), Summary("BCAT check now")]
+        public async Task BcatCheckNow()
+        {
+            await Context.Channel.SendMessageAsync("**[Admin]** Scheduling immediate BCAT check");
+
+            await QuartzScheduler.ScheduleJob<BcatCheckerJob>("Request");
+        }
+
     }
 }
