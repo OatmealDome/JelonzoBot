@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BcatBotFramework.Internationalization;
 using Nintendo.Archive;
 using Nintendo.Bcat;
 using Nintendo.Blitz;
 using Nintendo.Blitz.Mush;
+using Nintendo.Blitz.Mush.WeaponInfo;
 
 namespace JelonzoBot.Blitz.Internationalization
 {
@@ -12,6 +14,7 @@ namespace JelonzoBot.Blitz.Internationalization
     {
         private static Dictionary<Language, MsbtHolder> MsbtHolders;
         private static List<MapInfoEntry> MapInfoEntries;
+        private static List<WeaponInfoEntry> WeaponInfoEntries;
         
         public static void Initialize()
         {
@@ -40,6 +43,9 @@ namespace JelonzoBot.Blitz.Internationalization
 
                 // Load MapInfo
                 MapInfoEntries = RomResourceLoader.GetByamlDeserializedFromLocal<List<MapInfoEntry>>(mushSarc["Mush/MapInfo.release.byml"]);
+            
+                // Load WeaponInfo_Main
+                WeaponInfoEntries = RomResourceLoader.GetByamlDeserializedFromLocal<List<WeaponInfoEntry>>(mushSarc["Mush/WeaponInfo_Main.release.byml"]);
             }
         }
 
@@ -86,6 +92,32 @@ namespace JelonzoBot.Blitz.Internationalization
 
             // Load the localized string from the file name
             return MsbtHolders[language].Localize(targetMsbt, localizable);
+        }
+
+        public static string LocalizeWeapon(Language language, int id)
+        {
+            // Check if this is a special coop weapon
+            if (id == -1)
+            {
+                return Localizer.Localize("weapon.coop_random", language);
+            }
+            else if (id == -2)
+            {
+                return Localizer.Localize("weapon.coop_random_grizzco", language);
+            }
+            
+            // Get the entry from MapInfo
+            WeaponInfoEntry weaponInfoEntry = WeaponInfoEntries.Where(x => x.Id == id).FirstOrDefault();
+
+            // Check if the entry exists
+            if (weaponInfoEntry == null)
+            {
+                // Return a generic string
+                return $"ID ${id}";
+            }
+
+            // Load the localized string
+            return MsbtHolders[language].Localize("WeaponName_Main", weaponInfoEntry.Name);
         }
 
     }
