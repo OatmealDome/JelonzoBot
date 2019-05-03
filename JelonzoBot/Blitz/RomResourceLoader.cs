@@ -49,7 +49,10 @@ namespace JelonzoBot.Blitz
             Stream stream = file.AsStream();
 
             // Check if this is a nisasyst file
-            if (Nisasyst.IsNisasystFile(stream))
+            // .pack files are automatically considered to be not nisasyst-encrypted,
+            // since a nisasyst-encrypted file can be placed at the end and trip up
+            // the check. Let's hope that a pack doesn't become nisasyst encrypted.
+            if (Path.GetExtension(romPath) != ".pack" && Nisasyst.IsNisasystFile(stream))
             {
                 // Get the game path for Nisasyst
                 string gamePath = romPath.StartsWith('/') ? romPath.Substring(1) : romPath;
