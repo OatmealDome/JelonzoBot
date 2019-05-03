@@ -72,7 +72,7 @@ namespace Nintendo.Blitz
 
             // Read the magic numbers
             byte[] lastBytes = new byte[8];
-            stream.Seek(-8, SeekOrigin.End);
+            stream.Seek(stream.Length - 8, SeekOrigin.Begin);
             stream.Read(lastBytes, 0, 8);
             
             // Seek back to the beginning
