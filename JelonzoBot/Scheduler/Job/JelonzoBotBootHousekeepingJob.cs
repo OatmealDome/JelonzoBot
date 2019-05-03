@@ -3,6 +3,7 @@ using BcatBotFramework.Core.Config;
 using BcatBotFramework.Scheduler;
 using BcatBotFramework.Scheduler.Job;
 using JelonzoBot.Blitz;
+using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core;
 
 namespace JelonzoBot.Scheduler.Job
@@ -19,6 +20,9 @@ namespace JelonzoBot.Scheduler.Job
 
             // Initialize the RomResourceLoader
             RomResourceLoader.Initialize();
+
+            // Initialize the BlitzLocalizer
+            BlitzLocalizer.Initialize();
 
             // No async tasks to wait on here
             return Task.FromResult(0);
