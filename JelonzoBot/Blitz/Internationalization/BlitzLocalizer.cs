@@ -94,6 +94,12 @@ namespace JelonzoBot.Blitz.Internationalization
             return MsbtHolders[language].Localize(targetMsbt, localizable);
         }
 
+        public static string LocalizeRule(VersusRule rule, Language language)
+        {
+            // Load the localized string
+            return MsbtHolders[language].Localize("VSRuleName", rule.ToString());
+        }
+
         public static string LocalizeWeapon(int id, Language language)
         {
             // Check if this is a special coop weapon
