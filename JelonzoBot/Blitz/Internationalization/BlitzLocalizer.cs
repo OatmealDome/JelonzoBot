@@ -94,10 +94,42 @@ namespace JelonzoBot.Blitz.Internationalization
             return MsbtHolders[language].Localize(targetMsbt, localizable);
         }
 
+        public static Dictionary<Language, string> LocalizeStageToAllLanguages(int id)
+        {
+            // Create a new Dictionary
+            Dictionary<Language, string> valueDict = new Dictionary<Language, string>();
+
+            // Populate the Dictionary
+            foreach (Language language in BlitzUtil.SupportedLanguages)
+            {
+                // Localize the key to this Language
+                valueDict.Add(language, LocalizeStage(id, language));
+            }
+
+            // Return the Dictionary
+            return valueDict;
+        }
+
         public static string LocalizeRule(VersusRule rule, Language language)
         {
             // Load the localized string
             return MsbtHolders[language].Localize("VSRuleName", rule.ToString());
+        }
+
+        public static Dictionary<Language, string> LocalizeRuleToAllLanguages(VersusRule rule)
+        {
+            // Create a new Dictionary
+            Dictionary<Language, string> valueDict = new Dictionary<Language, string>();
+
+            // Populate the Dictionary
+            foreach (Language language in BlitzUtil.SupportedLanguages)
+            {
+                // Localize the key to this Language
+                valueDict.Add(language, LocalizeRule(rule, language));
+            }
+
+            // Return the Dictionary
+            return valueDict;
         }
 
         public static string LocalizeWeapon(int id, Language language)
@@ -125,6 +157,22 @@ namespace JelonzoBot.Blitz.Internationalization
             // Load the localized string
             return MsbtHolders[language].Localize("WeaponName_Main", weaponInfoEntry.Name);
         }
+        
+        public static Dictionary<Language, string> LocalizeWeaponToAllLanguages(int id)
+        {
+            // Create a new Dictionary
+            Dictionary<Language, string> valueDict = new Dictionary<Language, string>();
 
+            // Populate the Dictionary
+            foreach (Language language in BlitzUtil.SupportedLanguages)
+            {
+                // Localize the key to this Language
+                valueDict.Add(language, LocalizeWeapon(id, language));
+            }
+
+            // Return the Dictionary
+            return valueDict;
+        }
+        
     }
 }
