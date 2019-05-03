@@ -17,6 +17,7 @@ namespace JelonzoBot.Core
         // Paths
         private static string LOCAL_DIRECTORY = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "FileCache");
         public static string FESTIVAL_SETTING_PATH = Path.Combine(LOCAL_DIRECTORY, "Festival", "{0}", "{1}.byaml");
+        public static string FESTIVAL_PANEL_PATH = Path.Combine(LOCAL_DIRECTORY, "Festival", "{0}", "{1}.png");
         public static string VERSUS_SETTING_PATH = Path.Combine(LOCAL_DIRECTORY, "VSSetting", "{0}.byaml");
         public static string COOP_SETTING_PATH = Path.Combine(LOCAL_DIRECTORY, "CoopSetting.byaml");
 
@@ -50,7 +51,7 @@ namespace JelonzoBot.Core
                 FestivalSettings[romType] = new List<FestivalSetting>();
 
                 // Get all FestivalSetting byamls for this RomType
-                string[] festPaths = Directory.GetFiles(Path.Combine(LOCAL_DIRECTORY, "Festival", romType.ToString()));
+                string[] festPaths = Directory.GetFiles(Path.Combine(LOCAL_DIRECTORY, "Festival", romType.ToString()), "*.byaml");
 
                 // Loop over every path
                 foreach (string festPath in festPaths)
