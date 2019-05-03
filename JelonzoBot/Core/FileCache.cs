@@ -70,7 +70,7 @@ namespace JelonzoBot.Core
             VersusSettings = new Dictionary<RomType, VersusSetting>();
 
             // Get all VersusSetting byamls
-            string[] versusPaths = Directory.GetFiles(Path.Combine(LOCAL_DIRECTORY, "Festival"));
+            string[] versusPaths = Directory.GetFiles(Path.Combine(LOCAL_DIRECTORY, "VSSetting"));
 
             // Loop over every path
             foreach (string versusPath in versusPaths)
