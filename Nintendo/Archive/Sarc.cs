@@ -107,8 +107,7 @@ namespace Nintendo.Archive
                 {
                     // Read the node details
                     uint hash = reader.ReadUInt32();
-                    ushort fileAttrs = reader.ReadUInt16();
-                    int nameOfs = reader.ReadUInt16() * 4;
+                    uint fileAttrs = reader.ReadUInt32();
                     uint nodeDataBeginOfs = reader.ReadUInt32();
                     uint nodeDataEndOfs = reader.ReadUInt32();
 
@@ -116,8 +115,8 @@ namespace Nintendo.Archive
                     nodes.Add(new SfatNode()
                     {
                         Hash = hash,
-                        HasName = (fileAttrs & 0x0100) == 0x0100,
-                        NameOfs = nameOfs,
+                        HasName = (fileAttrs & 0x01000000) == 0x01000000, // check for name flag
+                        NameOfs = (int)(fileAttrs & 0x0000FFFF) * 4, // mask upper bits and multiply by 4
                         DataOfs = nodeDataBeginOfs,
                         DataLength = nodeDataEndOfs - nodeDataBeginOfs
                     });
