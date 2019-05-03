@@ -11,6 +11,7 @@ namespace Nintendo.Archive
         struct SfatNode
         {
             public uint Hash;
+            public bool HasName;
             public int NameOfs;
             public uint DataOfs;
             public uint DataLength;
@@ -115,7 +116,8 @@ namespace Nintendo.Archive
                     nodes.Add(new SfatNode()
                     {
                         Hash = hash,
-                        NameOfs = (fileAttrs & 0x0100) == 0x0100 ? nameOfs : int.MaxValue,
+                        HasName = (fileAttrs & 0x0100) == 0x0100,
+                        NameOfs = nameOfs,
                         DataOfs = nodeDataBeginOfs,
                         DataLength = nodeDataEndOfs - nodeDataBeginOfs
                     });
@@ -140,7 +142,7 @@ namespace Nintendo.Archive
                     string filename;
 
                     // Check if there is a name offset
-                    if (node.NameOfs != int.MaxValue)
+                    if (node.HasName)
                     {
                         // Read the name at this position
                         using (reader.TemporarySeek(nameBeginOfs + node.NameOfs, SeekOrigin.Begin))
