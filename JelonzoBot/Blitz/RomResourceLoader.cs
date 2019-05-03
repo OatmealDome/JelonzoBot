@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using BcatBotFramework.Core;
 using BcatBotFramework.Core.Config;
@@ -68,7 +69,13 @@ namespace JelonzoBot.Blitz
                 stream = memoryStream;
             }
 
-            try
+            // Read the first four bytes
+            byte[] firstBytes = new byte[4];
+            stream.Read(firstBytes, 0, 4);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Check if the file is Yaz0 compressed
+            if (firstBytes.SequenceEqual(Yaz0MagicNumbers))
             {
                 // Create a new MemoryStream
                 MemoryStream bufferStream = new MemoryStream();
@@ -82,11 +89,6 @@ namespace JelonzoBot.Blitz
                 // Switch the streams
                 stream.Dispose();
                 stream = bufferStream;
-            }
-            catch (Yaz0Exception)
-            {
-                // Seek back to the beginning
-                stream.Seek(0, SeekOrigin.Begin);
             }
 
             // Return the stream
