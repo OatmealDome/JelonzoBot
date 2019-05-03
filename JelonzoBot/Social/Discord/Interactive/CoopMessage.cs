@@ -5,6 +5,7 @@ using BcatBotFramework.Internationalization;
 using BcatBotFramework.Social.Discord;
 using BcatBotFramework.Social.Discord.Interactive;
 using Discord;
+using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core;
 using Nintendo.Bcat;
 using Nintendo.Blitz.Bcat.Coop;
@@ -44,16 +45,14 @@ namespace JelonzoBot.Social.Discord.Interactive
             CoopPhase phase = phases[this.CurrentPage];
 
             // Build the weapon string
-            string weapons = string.Join('\n', phase.WeaponSets)
-                .Replace("-1", "<:sr_random:564288761182027811>") // replace with green ? emoji
-                .Replace("-2", "<:sr_grizzco_random:564292130017771520>"); // replace with golden ? emoji
+            string weapons = string.Join('\n', phase.WeaponSets.Select(x => BlitzLocalizer.LocalizeWeapon(language, x)));
 
             // Build an Embed
             Embed embed = new EmbedBuilder()
                 .WithTitle(Localizer.Localize("coop.title", language))
                 .AddField(Localizer.Localize("coop.start_time", language), phase.StartDateTime <= DateTime.UtcNow ? Localizer.Localize("coop.start_time_now", language) : Localizer.LocalizeDateTime(phase.StartDateTime, language))
                 .AddField(Localizer.Localize("coop.end_time", language), Localizer.LocalizeDateTime(phase.EndDateTime, language))
-                .AddField(Localizer.Localize("coop.stage", language), phase.StageId)
+                .AddField(Localizer.Localize("coop.stage", language), BlitzLocalizer.LocalizeMap(language, phase.StageId))
                 .AddField(Localizer.Localize("coop.weapons", language), weapons)
                 .Build();
 
