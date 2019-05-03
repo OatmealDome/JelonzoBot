@@ -20,7 +20,7 @@ namespace JelonzoBot.Blitz.Internationalization
 
         public string Localize(string sourceMsbt, string localizable)
         {
-            return Msbts[sourceMsbt][localizable];
+            return Msbts[sourceMsbt][localizable].Trim('\0');
         }
 
         private static Dictionary<string, string> LoadMsbt(byte[] rawMsbt)
