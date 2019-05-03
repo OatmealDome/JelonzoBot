@@ -61,7 +61,7 @@ namespace Nintendo.Archive
                 }
 
                 // Skip the header length
-                reader.Seek(4);
+                reader.Seek(2);
 
                 // Check the byte order mark to see if this file is little endian
                 if (reader.ReadUInt16() == 0xFFFE)
