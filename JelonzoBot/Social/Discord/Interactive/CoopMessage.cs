@@ -45,14 +45,14 @@ namespace JelonzoBot.Social.Discord.Interactive
             CoopPhase phase = phases[this.CurrentPage];
 
             // Build the weapon string
-            string weapons = string.Join('\n', phase.WeaponSets.Select(x => BlitzLocalizer.LocalizeWeapon(language, x)));
+            string weapons = string.Join('\n', phase.WeaponSets.Select(x => BlitzLocalizer.LocalizeWeapon(x, language)));
 
             // Build an Embed
             Embed embed = new EmbedBuilder()
                 .WithTitle(Localizer.Localize("coop.title", language))
                 .AddField(Localizer.Localize("coop.start_time", language), phase.StartDateTime <= DateTime.UtcNow ? Localizer.Localize("coop.start_time_now", language) : Localizer.LocalizeDateTime(phase.StartDateTime, language))
                 .AddField(Localizer.Localize("coop.end_time", language), Localizer.LocalizeDateTime(phase.EndDateTime, language))
-                .AddField(Localizer.Localize("coop.stage", language), BlitzLocalizer.LocalizeMap(language, phase.StageId))
+                .AddField(Localizer.Localize("coop.stage", language), BlitzLocalizer.LocalizeStage(phase.StageId, language))
                 .AddField(Localizer.Localize("coop.weapons", language), weapons)
                 .Build();
 

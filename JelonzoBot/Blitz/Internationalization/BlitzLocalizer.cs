@@ -54,7 +54,7 @@ namespace JelonzoBot.Blitz.Internationalization
 
         }
 
-        public static string LocalizeMap(Language language, int id)
+        public static string LocalizeStage(int id, Language language)
         {
             // Get the entry from MapInfo
             MapInfoEntry mapInfoEntry = MapInfoEntries.Where(x => x.Id == id).FirstOrDefault();
@@ -94,7 +94,7 @@ namespace JelonzoBot.Blitz.Internationalization
             return MsbtHolders[language].Localize(targetMsbt, localizable);
         }
 
-        public static string LocalizeWeapon(Language language, int id)
+        public static string LocalizeWeapon(int id, Language language)
         {
             // Check if this is a special coop weapon
             if (id == -1)
@@ -105,7 +105,7 @@ namespace JelonzoBot.Blitz.Internationalization
             {
                 return Localizer.Localize("weapon.coop_random_grizzco", language);
             }
-            
+
             // Get the entry from MapInfo
             WeaponInfoEntry weaponInfoEntry = WeaponInfoEntries.Where(x => x.Id == id).FirstOrDefault();
 

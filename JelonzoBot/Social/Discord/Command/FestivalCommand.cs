@@ -3,6 +3,7 @@ using BcatBotFramework.Internationalization;
 using BcatBotFramework.Social.Discord;
 using Discord;
 using Discord.Commands;
+using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core;
 using Nintendo.Bcat;
 using Nintendo.Blitz;
@@ -43,7 +44,7 @@ namespace JelonzoBot.Social.Discord.Command
                 .AddField(Localizer.Localize("festival.team_alpha", language), $"**{festivalSetting.Teams[0].Name[language]}**", true)
                 .AddField(Localizer.Localize("festival.team_bravo", language), $"**{festivalSetting.Teams[1].Name[language]}**", true)
                 .AddField(Localizer.Localize("festival.rule", language), festivalSetting.VersusRule.ToString(), true)
-                .AddField(Localizer.Localize("festival.special_stage", language), festivalSetting.SpecialStage, true);
+                .AddField(Localizer.Localize("festival.special_stage", language), BlitzLocalizer.LocalizeStage(festivalSetting.SpecialStage, language), true);
 
             // Add the special type field if necessary
             if (festivalSetting.SpecialType != null)
