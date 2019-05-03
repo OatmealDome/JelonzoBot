@@ -21,7 +21,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Schedule
             set;
         }
 
-        public VersusRule VersusRule
+        public VersusRule Rule
         {
             get;
             set;
@@ -29,7 +29,7 @@ namespace Nintendo.Blitz.Bcat.Versus.Schedule
 
         public void DeserializeByaml(IDictionary<string, object> dictionary)
         {
-            EnumUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["VersusRule"]);
+            Rule = (VersusRule)EnumUtil.GetEnumValueFromString(typeof(VersusRule), (string)dictionary["Rule"]);
         }
 
         public void SerializeByaml(IDictionary<string, object> dictionary)
