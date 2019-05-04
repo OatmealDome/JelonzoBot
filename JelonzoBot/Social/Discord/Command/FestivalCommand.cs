@@ -38,25 +38,36 @@ namespace JelonzoBot.Social.Discord.Command
             // Get the Color for the neutral team
             System.Drawing.Color drawingColor = festivalSetting.Teams[2].GetColor4fAsColor();
 
+            // Localize the RomType
+            string localizedRomType = Localizer.Localize($"romtype.{romType.ToString().ToLower()}", language);
+
+            // Use the special title if necessary
+            string title;
+            if (festivalSetting.SpecialType != null)
+            {
+                // Localize the special type
+                string localizedSpecialType = Localizer.Localize($"festival.special_type.{festivalSetting.SpecialType.ToLower()}", language);
+
+                // Localize the title
+                title = string.Format(Localizer.Localize("festival.title_special", language), localizedRomType, localizedSpecialType);
+            }
+            else
+            {
+                // Use the standard title
+                title = string.Format(Localizer.Localize("festival.title", language), localizedRomType);
+            }
+
             // Begin building an embed
             EmbedBuilder embedBuilder = new EmbedBuilder()
-                .WithTitle(Localizer.Localize("festival.title", language))
+                .WithTitle(title)
                 .AddField(Localizer.Localize("festival.team_alpha", language), $"**{festivalSetting.Teams[0].Name[language]}**", true)
                 .AddField(Localizer.Localize("festival.team_bravo", language), $"**{festivalSetting.Teams[1].Name[language]}**", true)
                 .AddField(Localizer.Localize("festival.rule", language), BlitzLocalizer.LocalizeRule(festivalSetting.VersusRule, language), true)
-                .AddField(Localizer.Localize("festival.special_stage", language), BlitzLocalizer.LocalizeStage(festivalSetting.SpecialStage, language), true);
-
-            // Add the special type field if necessary
-            if (festivalSetting.SpecialType != null)
-            {
-                string localizedSpecialType = Localizer.Localize(string.Format("festival.special_type.{0}", festivalSetting.SpecialType.ToLower()), language);
-                embedBuilder.AddField(Localizer.Localize("festival.special_type", language), localizedSpecialType);
-            }
-
-             // Continue adding fields
-            embedBuilder.AddField(Localizer.Localize("festival.announcement_time", language), Localizer.LocalizeDateTime(festivalSetting.Times.Announcement, language))
+                .AddField(Localizer.Localize("festival.special_stage", language), BlitzLocalizer.LocalizeStage(festivalSetting.SpecialStage, language), true)
+                .AddField(Localizer.Localize("festival.announcement_time", language), Localizer.LocalizeDateTime(festivalSetting.Times.Announcement, language))
                 .AddField(Localizer.Localize("festival.period", language), string.Format(Localizer.Localize("festival.period_format", language), Localizer.LocalizeDateTime(festivalSetting.Times.Start, language), Localizer.LocalizeDateTime(festivalSetting.Times.End, language)))
                 .AddField(Localizer.Localize("festival.results_time", language), Localizer.LocalizeDateTime(festivalSetting.Times.Result, language))
+                .WithImageUrl($"https://cdn.oatmealdome.me/splatoon/festival/{romType.ToString()}/{festivalSetting.FestivalId}/panel.png")
                 .WithColor(new Color(drawingColor.R, drawingColor.G, drawingColor.B));
 
             await Context.Channel.SendMessageAsync(embed: embedBuilder.Build());
