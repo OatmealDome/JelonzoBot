@@ -159,7 +159,7 @@ namespace JelonzoBot.Scheduler.Job
                     }
 
                     // Write out the Topic
-                    //File.WriteAllBytes(Program.LOCAL_LAST_TOPIC, MessagePackSerializer.Serialize(topic));
+                    File.WriteAllBytes(Program.LOCAL_LAST_TOPIC, MessagePackSerializer.Serialize(topic));
 
 finished:
                     await DiscordBot.LoggingChannel.SendMessageAsync("**[BCAT]** Check complete for " + bcatPairEntry.Key.ToString());
