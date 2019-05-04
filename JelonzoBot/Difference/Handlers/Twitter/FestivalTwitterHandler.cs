@@ -22,7 +22,7 @@ namespace JelonzoBot.Difference.Handlers.Twitter
             // Don't do anything
             if (previousFestival.FestivalId == newFestival.FestivalId)
             {
-                //return Task.FromResult(0);
+                return Task.FromResult(0);
             }
 
             // Get the language based off the RomType
