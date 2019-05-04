@@ -47,17 +47,12 @@ namespace JelonzoBot.Scheduler.Job
     #if DEBUG
                     if (!Configuration.LoadedConfiguration.IsProduction)
                     {
-                        /*foreach (Bcat.Directory dir in oldTopic.Directories)
+                        /*foreach (Nintendo.Bcat.Directory dir in oldTopic.Directories)
                         {
-                            if (dir.Name == "line_news")
+                            if (dir.Name == "fesdata")
                             {
-                                Data dbgData = dir.Data.FirstOrDefault();
-                                if (dbgData == null)
-                                {
-                                    continue;
-                                }
-                                dir.Data.Remove(dbgData);
-                                //dbgData.Digest = "deadbeef";
+                                Data dbgData = dir.Data.Where(x => x.Name == "Festival.byaml").FirstOrDefault();
+                                dbgData.Digest = "deadbeef";
                             }
                         }*/
                     }
