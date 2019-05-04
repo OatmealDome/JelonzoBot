@@ -129,7 +129,7 @@ namespace JelonzoBot.Difference.Handlers.Web
                 WebFileHandler.WriteSerializedJson(manifestPath, manifest);
 
                 // Get the FestivalSetting JSON path
-                string path = webConfig.LatestFestivalManifestPath;
+                string path = webConfig.FestivalSettingPath;
                 switch (romType)
                 {
                     case RomType.NorthAmerica:
