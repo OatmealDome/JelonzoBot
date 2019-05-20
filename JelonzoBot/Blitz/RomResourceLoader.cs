@@ -148,7 +148,6 @@ namespace JelonzoBot.Blitz
         private static ByamlSettings PrepareByaml(Stream stream)
         {
             using (BinaryDataReader reader = new BinaryDataReader(stream, Encoding.ASCII, true))
-            using (BinaryDataWriter writer = new BinaryDataWriter(stream, Encoding.ASCII, true))
             {
                 // Create a new ByamlSettings instance
                 ByamlSettings byamlSettings = new ByamlSettings();
