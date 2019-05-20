@@ -41,8 +41,11 @@ namespace JelonzoBot.Scheduler.Job
                     // Create the target folder name
                     string targetFolder = string.Format(Program.LOCAL_OLD_DATA_DIRECTORY, DateTime.Now.ToString(Program.FOLDER_DATE_TIME_FORMAT), bcatPairEntry.Key.ToString());
 
+                    // Format the old Topic path
+                    string oldTopicPath = string.Format(Program.LOCAL_LAST_TOPIC, bcatPairEntry.Key.ToString());
+
                     // Load the old Topic
-                    Topic oldTopic = MessagePackSerializer.Deserialize<Topic>(File.ReadAllBytes(string.Format(Program.LOCAL_LAST_TOPIC, bcatPairEntry.Key.ToString())));
+                    Topic oldTopic = MessagePackSerializer.Deserialize<Topic>(File.ReadAllBytes(oldTopicPath));
 
     #if DEBUG
                     if (!Configuration.LoadedConfiguration.IsProduction)
@@ -159,7 +162,7 @@ namespace JelonzoBot.Scheduler.Job
                     }
 
                     // Write out the Topic
-                    File.WriteAllBytes(Program.LOCAL_LAST_TOPIC, MessagePackSerializer.Serialize(topic));
+                    File.WriteAllBytes(oldTopicPath, MessagePackSerializer.Serialize(topic));
 
 finished:
                     await DiscordBot.LoggingChannel.SendMessageAsync("**[BCAT]** Check complete for " + bcatPairEntry.Key.ToString());
