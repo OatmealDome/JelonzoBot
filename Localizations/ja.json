@@ -55,7 +55,7 @@
     "festival.twitter.title": "[{0}のフェス]",
     "festival.twitter.title_special": "[{0}のスペシャルフェス]",
     "festival.twitter.description": "テーマ： 「{0}」 vs 「{1}」\nフェス期間： {2} 〜 {3}",
-    "festival.twitter.url": "More information -> https://content.oatmealdome.me/bcat/festival_generic?region={0}", 
+    "festival.twitter.url": "詳しくはこちら -> https://content.oatmealdome.me/bcat/festival_generic?region={0}", 
     "coop.title": "Salmon Run Rotation",
     "coop.start_time": "Start Time",
     "coop.end_time": "End Time",
