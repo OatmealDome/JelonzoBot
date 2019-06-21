@@ -17,6 +17,10 @@
     <PackageReference Include="ssh.net.fork" Version="2018.8.25.2" />
     <PackageReference Include="Syroot.NintenTools.Yaz0" Version="2.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="GitInfo" Version="2.0.20">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <Reference Include="Syroot.BinaryData">
       <HintPath>Libraries/Syroot.BinaryData.dll</HintPath>
     </Reference>
