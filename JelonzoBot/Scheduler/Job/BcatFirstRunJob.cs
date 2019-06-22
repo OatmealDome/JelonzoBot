@@ -74,7 +74,7 @@ namespace JelonzoBot.Scheduler.Job
                                 break;
                             case FileType.FestivalByaml:
                                 // Deserialize the byaml to get the ID
-                                dynamic byaml = RomResourceLoader.GetByamlDynamicFromLocal(dataPair.Value);
+                                dynamic byaml = ByamlLoader.GetByamlDynamic(dataPair.Value);
 
                                 // Generate the path
                                 path = string.Format(FileCache.FESTIVAL_SETTING_PATH, bcatPairEntry.Key.ToString(), byaml["FestivalId"]);

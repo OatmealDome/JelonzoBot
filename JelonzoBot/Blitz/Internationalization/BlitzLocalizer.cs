@@ -42,10 +42,10 @@ namespace JelonzoBot.Blitz.Internationalization
                 Sarc mushSarc = new Sarc(mushStream);
 
                 // Load MapInfo
-                MapInfoEntries = RomResourceLoader.GetByamlDeserializedFromLocal<List<MapInfoEntry>>(mushSarc["Mush/MapInfo.release.byml"]);
+                MapInfoEntries = ByamlLoader.GetByamlDeserialized<List<MapInfoEntry>>(mushSarc["Mush/MapInfo.release.byml"]);
             
                 // Load WeaponInfo_Main
-                WeaponInfoEntries = RomResourceLoader.GetByamlDeserializedFromLocal<List<WeaponInfoEntry>>(mushSarc["Mush/WeaponInfo_Main.release.byml"]);
+                WeaponInfoEntries = ByamlLoader.GetByamlDeserialized<List<WeaponInfoEntry>>(mushSarc["Mush/WeaponInfo_Main.release.byml"]);
             }
         }
 

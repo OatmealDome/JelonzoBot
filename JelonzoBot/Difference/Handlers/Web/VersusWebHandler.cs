@@ -25,7 +25,7 @@ namespace JelonzoBot.Difference.Handlers.Web
                 WebFileHandler.Connect(webConfig);
 
                 // Deserialize the VersusSetting dynamically
-                dynamic settingDynamic = RomResourceLoader.GetByamlDynamicFromLocal(rawFile);
+                dynamic settingDynamic = ByamlLoader.GetByamlDynamic(rawFile);
 
                 // Get the FestivalSetting JSON path
                 string path = webConfig.VersusSettingPath;

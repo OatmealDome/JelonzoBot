@@ -30,7 +30,7 @@ namespace JelonzoBot.Difference.Handlers.Web
                 WebFileHandler.Connect(webConfig);
 
                 // Deserialize the CoopSetting dynamically
-                dynamic settingDynamic = RomResourceLoader.GetByamlDynamicFromLocal(rawFile);
+                dynamic settingDynamic = ByamlLoader.GetByamlDynamic(rawFile);
 
                 // Upload to the server
                 WebFileHandler.WriteSerializedJson(webConfig.CoopSettingPath, settingDynamic);

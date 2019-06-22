@@ -40,7 +40,7 @@ namespace JelonzoBot.Difference.Handlers.Web
             string s3Path = $"/splatoon/festival/{romType.ToString()}/{newFestival.FestivalId}";
 
             // Deserialize the FestivalSetting dynamically
-            dynamic settingDynamic = RomResourceLoader.GetByamlDynamicFromLocal(rawFile);
+            dynamic settingDynamic = ByamlLoader.GetByamlDynamic(rawFile);
 
             // Serialize the FestivalSetting to JSON
             string json = JsonConvert.SerializeObject(settingDynamic);
