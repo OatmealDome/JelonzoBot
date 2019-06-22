@@ -46,7 +46,7 @@ namespace JelonzoBot.Difference.Handlers.Web
             string json = JsonConvert.SerializeObject(settingDynamic);
 
             // Upload to S3
-            S3Api.TransferFile(Encoding.UTF8.GetBytes(json), s3Path, "setting.json");
+            S3Api.TransferFile(Encoding.UTF8.GetBytes(json), s3Path, "setting.json", "application/json");
 
             // Load the panel texture file
             using (MemoryStream panelStream = new MemoryStream(data[FileType.FestivalPanelTexture.GetPath()]))
