@@ -7,7 +7,7 @@ namespace JelonzoBot.Blitz.Internationalization
 {
     public class MsbtHolder
     {
-        private Dictionary<string, Dictionary<string, string>> Msbts = new Dictionary<string, Dictionary<string, string>>();
+        public Dictionary<string, Dictionary<string, string>> Msbts = new Dictionary<string, Dictionary<string, string>>();
 
         public MsbtHolder(Sarc commonSarc)
         {

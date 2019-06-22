@@ -12,7 +12,7 @@ namespace JelonzoBot.Blitz.Internationalization
 {
     public static class BlitzLocalizer
     {
-        private static Dictionary<Language, MsbtHolder> MsbtHolders;
+        public static Dictionary<Language, MsbtHolder> MsbtHolders;
         private static List<MapInfoEntry> MapInfoEntries;
         private static List<WeaponInfoEntry> WeaponInfoEntries;
         
