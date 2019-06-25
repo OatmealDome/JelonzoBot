@@ -64,25 +64,17 @@ namespace JelonzoBot.Blitz
         public static Stream GetRomFile(string romPath)
         {
             // Attempt to load from the packs first
+            Stream stream;
             if (PackFiles.TryGetValue(romPath, out byte[] file))
             {
-                // Return a MemoryStream
-                return new MemoryStream(file);
+                // Create a MemoryStream
+                stream = new MemoryStream(file);
             }
             else
             {
                 // Load from the romfs
-                return GetRomFileFromRomfs(romPath);
+                stream = GetRomFileFromRomfs(romPath);
             }
-        }
-
-        public static Stream GetRomFileFromRomfs(string romPath)
-        {
-            // Load the file
-            IFile file = NcaWrapper.Romfs.OpenFile(romPath, OpenMode.Read);
-
-            // Get the file as a Stream
-            Stream stream = file.AsStream();
 
             // Check if this is a nisasyst file
             // .pack files are automatically considered to be not nisasyst-encrypted,
@@ -130,6 +122,15 @@ namespace JelonzoBot.Blitz
             return stream;
         }
 
+        public static Stream GetRomFileFromRomfs(string romPath)
+        {
+            // Load the file
+            IFile file = NcaWrapper.Romfs.OpenFile(romPath, OpenMode.Read);
+
+            // Get the file as a Stream
+            return file.AsStream();
+        }
+
         public static IList<string> GetFilesInDirectory(string path)
         {
             // Create a list
@@ -144,7 +145,7 @@ namespace JelonzoBot.Blitz
                 foreach (DirectoryEntry directoryEntry in packDirectory.Read())
                 {
                     // Add this file to the list
-                    filesList.Add(path);
+                    filesList.Add(directoryEntry.FullPath);
                 }
             }
 
@@ -160,7 +161,7 @@ namespace JelonzoBot.Blitz
                 if (packPath.StartsWith(path) && packPath.Where(c => c == '/').Count() == slashCount)
                 {
                     // Add this file to the list
-                    filesList.Add(path);
+                    filesList.Add(packPath);
                 }
             }
 
