@@ -20,7 +20,7 @@ namespace JelonzoBot.Blitz.Internationalization
 
         public string Localize(string sourceMsbt, string localizable)
         {
-            return Msbts[sourceMsbt][localizable].Trim('\0');
+            return Msbts[sourceMsbt][localizable];
         }
 
         private static Dictionary<string, string> LoadMsbt(byte[] rawMsbt)
@@ -35,7 +35,7 @@ namespace JelonzoBot.Blitz.Internationalization
             for (int i = 0; i < msbt.TXT2.NumberOfStrings; i++)
             {
                 IEntry entry = msbt.HasLabels ? msbt.LBL1.Labels[i] : msbt.TXT2.Strings[i];
-                textMappings.Add(entry.ToString(), msbt.FileEncoding.GetString(entry.Value));
+                textMappings.Add(entry.ToString(), msbt.FileEncoding.GetString(entry.Value).Trim('\0'));
             }
 
             return textMappings;
