@@ -130,5 +130,43 @@ namespace JelonzoBot.Blitz
             return stream;
         }
 
+        public static IList<string> GetFilesInDirectory(string path)
+        {
+            // Create a list
+            List<string> filesList = new List<string>();
+
+            if (NcaWrapper.Romfs.DirectoryExists(path))
+            {
+                // Load the pack directory
+                IDirectory packDirectory = NcaWrapper.Romfs.OpenDirectory(path, OpenDirectoryMode.Files);
+                
+                // Read every directory entries
+                foreach (DirectoryEntry directoryEntry in packDirectory.Read())
+                {
+                    // Add this file to the list
+                    filesList.Add(path);
+                }
+            }
+
+            // Get the number of slashes that should be in the path
+            int slashCount = path.Where(c => c == '/').Count() + (path.EndsWith('/') ? 0 : 1);
+
+            // Go through every pack file to see if there's anything that matches
+            foreach (string packPath in PackFiles.Keys)
+            {
+                // Check if the path starts with the search path and that the slash count is equal
+                // If the slash count is equal, then the file is in the directory and not within
+                // a subdirectory.
+                if (packPath.StartsWith(path) && packPath.Where(c => c == '/').Count() == slashCount)
+                {
+                    // Add this file to the list
+                    filesList.Add(path);
+                }
+            }
+
+            // Check if there's any matching 
+            return filesList;
+        }
+
     }
 }
