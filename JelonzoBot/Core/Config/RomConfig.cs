@@ -16,10 +16,17 @@ namespace JelonzoBot.Core.Config
             set;
         }
 
+        public int LastRomVersion
+        {
+            get;
+            set;
+        }
+
         public void SetDefaults()
         {
             BaseNcaPath = "/home/oatmealdome/base.nca";
             UpdateNcaPath = "/home/oatmealdome/update.nca";
+            LastRomVersion = 0;
         }
         
     }
