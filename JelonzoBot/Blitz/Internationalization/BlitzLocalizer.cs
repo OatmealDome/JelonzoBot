@@ -34,19 +34,12 @@ namespace JelonzoBot.Blitz.Internationalization
                     MsbtHolders.Add(language, new MsbtHolder(sarc));
                 }
             }
-
-            // Load Mush.pack
-            using (Stream mushStream = RomResourceLoader.GetRomFile("/Pack/Mush.release.pack"))
-            {
-                // Get the Sarc archive
-                Sarc mushSarc = new Sarc(mushStream);
-
-                // Load MapInfo
-                MapInfoEntries = ByamlLoader.GetByamlDeserialized<List<MapInfoEntry>>(mushSarc["Mush/MapInfo.release.byml"]);
             
-                // Load WeaponInfo_Main
-                WeaponInfoEntries = ByamlLoader.GetByamlDeserialized<List<WeaponInfoEntry>>(mushSarc["Mush/WeaponInfo_Main.release.byml"]);
-            }
+            // Load MapInfo
+            MapInfoEntries = ByamlLoader.GetByamlDeserialized<List<MapInfoEntry>>("/Mush/MapInfo.release.byml");
+        
+            // Load WeaponInfo_Main
+            WeaponInfoEntries = ByamlLoader.GetByamlDeserialized<List<WeaponInfoEntry>>("/Mush/WeaponInfo_Main.release.byml"); 
         }
 
         public static void Dispose()
