@@ -164,6 +164,9 @@ namespace JelonzoBot.Scheduler.Job
                     // Write out the Topic
                     File.WriteAllBytes(oldTopicPath, MessagePackSerializer.Serialize(topic));
 
+                    // Set the last download path
+                    (Configuration.LoadedConfiguration as JelonzoBotConfiguration).LastDownloadPaths[bcatPairEntry.Key] = targetFolder;
+
 finished:
                     await DiscordBot.LoggingChannel.SendMessageAsync("**[BCAT]** Check complete for " + bcatPairEntry.Key.ToString());
                 }
