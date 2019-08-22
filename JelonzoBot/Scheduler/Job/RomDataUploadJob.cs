@@ -55,7 +55,7 @@ namespace JelonzoBot.Scheduler.Job
                         string json = JsonConvert.SerializeObject(pair.Value);
                         
                         // Upload to S3
-                        //S3Api.TransferFile(Encoding.UTF8.GetBytes(json), msbtPath, fileName, "application/json");
+                        S3Api.TransferFile(Encoding.UTF8.GetBytes(json), msbtPath, fileName, "application/json");
 
                         // Add to the cache list
                         clearPaths.Add($"{msbtPath}/{fileName}");
@@ -81,7 +81,7 @@ namespace JelonzoBot.Scheduler.Job
                     string json = JsonConvert.SerializeObject(byaml);
                         
                     // Upload to S3
-                    //S3Api.TransferFile(Encoding.UTF8.GetBytes(json), mushS3Path, fileName, "application/json");
+                    S3Api.TransferFile(Encoding.UTF8.GetBytes(json), mushS3Path, fileName, "application/json");
 
                     // Add to the paths to clear
                     clearPaths.Add($"{mushS3Path}/{fileName}");
