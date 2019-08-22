@@ -75,8 +75,9 @@ namespace JelonzoBot.Blitz
             // Check if this version is new compared to the last boot
             if (romConfig.LastRomVersion < appVersion)
             {
-                // Upload necessary ROM data
-                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal");
+                // Upload necessary ROM data after everything is initalized
+                // TODO: bad hack - what if initialization takes >1min? (unlikely but not impossible)
+                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal", DateTime.Now.AddMinutes(1), new JobDataMap());
 
                 // Set the last app version
                 romConfig.LastRomVersion = appVersion;
