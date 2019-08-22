@@ -10,7 +10,7 @@ namespace JelonzoBot.Scheduler.Job
 {
     public class JelonzoBotBootHousekeepingJob : BootHousekeepingJob
     {
-        protected override Task RunAppSpecificBootTasks()
+        protected override async Task RunAppSpecificBootTasks()
         {
             // Initialize the FileCache if first run is complete
             if (Configuration.LoadedConfiguration.FirstRunCompleted)
@@ -19,13 +19,10 @@ namespace JelonzoBot.Scheduler.Job
             }
 
             // Initialize the RomResourceLoader
-            RomResourceLoader.Initialize();
+            await RomResourceLoader.Initialize();
 
             // Initialize the BlitzLocalizer
             BlitzLocalizer.Initialize();
-
-            // No async tasks to wait on here
-            return Task.FromResult(0);
         }
 
         protected override async Task SchedulePostBootJobs()
