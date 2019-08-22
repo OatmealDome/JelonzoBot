@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -9,6 +10,7 @@ using JelonzoBot.Blitz;
 using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core;
 using JelonzoBot.Core.Config;
+using Quartz;
 
 namespace JelonzoBot.Scheduler.Job
 {
@@ -48,14 +50,12 @@ namespace JelonzoBot.Scheduler.Job
             // Check if this version is new compared to the last boot
             if (romConfig.LastRomVersion < appVersion)
             {
+                // Create a JobDataMap to hold the version
+                JobDataMap dataMap = new JobDataMap();
+                dataMap.Add("version", appVersion);
+
                 // Upload necessary ROM data after everything is initalized
-                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal");
-
-                // Set the last app version
-                romConfig.LastRomVersion = appVersion;
-
-                // Save the configuration
-                Configuration.LoadedConfiguration.Write();
+                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal", DateTime.Now.AddSeconds(5), dataMap);
             }
         }
 

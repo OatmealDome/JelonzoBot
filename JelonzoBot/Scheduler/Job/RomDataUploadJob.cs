@@ -10,6 +10,7 @@ using DigitalOcean;
 using DigitalOcean.Cdn;
 using JelonzoBot.Blitz;
 using JelonzoBot.Blitz.Internationalization;
+using JelonzoBot.Core.Config;
 using Newtonsoft.Json;
 using Nintendo.Bcat;
 using Nintendo.Blitz;
@@ -103,6 +104,11 @@ namespace JelonzoBot.Scheduler.Job
                     // Log files left
                     await DiscordBot.LoggingChannel.SendMessageAsync($"**[RomDataUploadJob]** Requesting CDN cache purge ({pathsEnumerable.Count()} of {clearPaths.Count} files left)");
                 }
+
+                // Write the app version
+                await DiscordBot.LoggingChannel.SendMessageAsync("**[RomDataUploadJob]** Saving new ROM version to configuration");
+                (Configuration.LoadedConfiguration as JelonzoBotConfiguration).RomConfig.LastRomVersion = (int)context.JobDetail.JobDataMap["version"];
+                Configuration.LoadedConfiguration.Write();
 
                 // Log that it's complete
                 await DiscordBot.LoggingChannel.SendMessageAsync("**[RomDataUploadJob]** ROM data upload complete");
