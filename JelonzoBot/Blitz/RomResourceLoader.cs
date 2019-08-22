@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 using BcatBotFramework.Core;
 using BcatBotFramework.Core.Config;
+using BcatBotFramework.Scheduler;
+using BcatBotFramework.Social.Discord;
+using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core.Config;
+using JelonzoBot.Scheduler.Job;
 using LibHac.IO;
+using Newtonsoft.Json;
 using Nintendo.Archive;
+using Nintendo.Bcat;
 using Nintendo.Blitz;
 using Nintendo.Switch;
-using Syroot.BinaryData;
-using Syroot.NintenTools.Byaml.Dynamic;
-using Syroot.NintenTools.Byaml.Serialization;
+using Quartz;
 using Syroot.NintenTools.Yaz0;
 
 namespace JelonzoBot.Blitz
@@ -20,10 +26,11 @@ namespace JelonzoBot.Blitz
     public static class RomResourceLoader
     {
         private static byte[] Yaz0MagicNumbers = Encoding.ASCII.GetBytes("Yaz0");
+
         private static NcaWrapper NcaWrapper;
         private static Dictionary<string, byte[]> PackFiles;
         
-        public static void Initialize()
+        public static async Task Initialize()
         {
             // Get the RomConfig
             RomConfig romConfig = ((JelonzoBotConfiguration)Configuration.LoadedConfiguration).RomConfig;
@@ -49,6 +56,33 @@ namespace JelonzoBot.Blitz
                     // Add this file to the pack files dictionary
                     PackFiles.Add("/" + pair.Key, pair.Value);
                 }
+            }
+
+            // Load GameConfigSetting
+            XDocument gameConfig = XDocument.Load(GetRomFile("/System/GameConfigSetting.xml"));
+
+            // Get the application version
+            int appVersion = int.Parse(gameConfig.Root
+                .Elements("category").Where(e => e.Attribute("name").Value == "Root").First()
+                .Elements("category").Where(e => e.Attribute("name").Value == "Project").First()
+                .Elements("category").Where(e => e.Attribute("name").Value == "Version").First()
+                .Elements("parameter").Where(e => e.Attribute("name").Value == "AppVersion").First()
+                .Attribute("defaultValue").Value);
+
+            // Output the ROM version
+            await DiscordBot.LoggingChannel.SendMessageAsync($"**[RomResourceLoader]** ROM version {appVersion} loaded");
+
+            // Check if this version is new compared to the last boot
+            if (romConfig.LastRomVersion < appVersion)
+            {
+                // Upload necessary ROM data
+                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal");
+
+                // Set the last app version
+                romConfig.LastRomVersion = appVersion;
+
+                // Save the configuration
+                Configuration.LoadedConfiguration.Write();
             }
         }
 
