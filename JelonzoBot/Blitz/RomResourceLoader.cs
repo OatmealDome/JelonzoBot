@@ -30,7 +30,7 @@ namespace JelonzoBot.Blitz
         private static NcaWrapper NcaWrapper;
         private static Dictionary<string, byte[]> PackFiles;
         
-        public static async Task Initialize()
+        public static void Initialize()
         {
             // Get the RomConfig
             RomConfig romConfig = ((JelonzoBotConfiguration)Configuration.LoadedConfiguration).RomConfig;
@@ -56,34 +56,6 @@ namespace JelonzoBot.Blitz
                     // Add this file to the pack files dictionary
                     PackFiles.Add("/" + pair.Key, pair.Value);
                 }
-            }
-
-            // Load GameConfigSetting
-            XDocument gameConfig = XDocument.Load(GetRomFile("/System/GameConfigSetting.xml"));
-
-            // Get the application version
-            int appVersion = int.Parse(gameConfig.Root
-                .Elements("category").Where(e => e.Attribute("name").Value == "Root").First()
-                .Elements("category").Where(e => e.Attribute("name").Value == "Project").First()
-                .Elements("category").Where(e => e.Attribute("name").Value == "Version").First()
-                .Elements("parameter").Where(e => e.Attribute("name").Value == "AppVersion").First()
-                .Attribute("defaultValue").Value);
-
-            // Output the ROM version
-            await DiscordBot.LoggingChannel.SendMessageAsync($"**[RomResourceLoader]** ROM version {appVersion} loaded");
-
-            // Check if this version is new compared to the last boot
-            if (romConfig.LastRomVersion < appVersion)
-            {
-                // Upload necessary ROM data after everything is initalized
-                // TODO: bad hack - what if initialization takes >1min? (unlikely but not impossible)
-                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal", DateTime.Now.AddMinutes(1), new JobDataMap());
-
-                // Set the last app version
-                romConfig.LastRomVersion = appVersion;
-
-                // Save the configuration
-                Configuration.LoadedConfiguration.Write();
             }
         }
 

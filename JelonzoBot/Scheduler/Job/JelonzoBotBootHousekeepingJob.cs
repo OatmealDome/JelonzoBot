@@ -1,10 +1,14 @@
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using BcatBotFramework.Core.Config;
 using BcatBotFramework.Scheduler;
 using BcatBotFramework.Scheduler.Job;
+using BcatBotFramework.Social.Discord;
 using JelonzoBot.Blitz;
 using JelonzoBot.Blitz.Internationalization;
 using JelonzoBot.Core;
+using JelonzoBot.Core.Config;
 
 namespace JelonzoBot.Scheduler.Job
 {
@@ -19,10 +23,40 @@ namespace JelonzoBot.Scheduler.Job
             }
 
             // Initialize the RomResourceLoader
-            await RomResourceLoader.Initialize();
+            RomResourceLoader.Initialize();
 
             // Initialize the BlitzLocalizer
             BlitzLocalizer.Initialize();
+
+            // Load GameConfigSetting
+            XDocument gameConfig = XDocument.Load(RomResourceLoader.GetRomFile("/System/GameConfigSetting.xml"));
+
+            // Get the application version
+            int appVersion = int.Parse(gameConfig.Root
+                .Elements("category").Where(e => e.Attribute("name").Value == "Root").First()
+                .Elements("category").Where(e => e.Attribute("name").Value == "Project").First()
+                .Elements("category").Where(e => e.Attribute("name").Value == "Version").First()
+                .Elements("parameter").Where(e => e.Attribute("name").Value == "AppVersion").First()
+                .Attribute("defaultValue").Value);
+
+            // Output the ROM version
+            await DiscordBot.LoggingChannel.SendMessageAsync($"**[JelonzoBotBootHousekepingJob]** ROM version {appVersion} was loaded by RomResourceLoader");
+
+            // Get the ROM config
+            RomConfig romConfig = (Configuration.LoadedConfiguration as JelonzoBotConfiguration).RomConfig;
+
+            // Check if this version is new compared to the last boot
+            if (romConfig.LastRomVersion < appVersion)
+            {
+                // Upload necessary ROM data after everything is initalized
+                await QuartzScheduler.ScheduleJob<RomDataUploadJob>("Normal");
+
+                // Set the last app version
+                romConfig.LastRomVersion = appVersion;
+
+                // Save the configuration
+                Configuration.LoadedConfiguration.Write();
+            }
         }
 
         protected override async Task SchedulePostBootJobs()
