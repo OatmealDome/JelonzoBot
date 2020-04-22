@@ -10,7 +10,7 @@ namespace JelonzoBot.Difference.Handlers.Discord
 {
     public class VersusDiscordHandler
     {
-        [JelonzoBotDifferenceHandler(FileType.VersusSetting, DifferenceType.Changed, 100)]
+        [JelonzoBotDifferenceHandler(FileType.VersusSetting, DifferenceType.Changed, 50)]
         public static async Task HandleVersus(RomType romType, Dictionary<string, byte[]> data, VersusSetting previousSetting, VersusSetting newSetting, byte[] rawFile)
         {
             await DiscordBot.LoggingChannel.SendMessageAsync($"**[VS] <@{Configuration.LoadedConfiguration.DiscordConfig.AdministratorIds[0]}> Settings for {romType.ToString()} updated.");
