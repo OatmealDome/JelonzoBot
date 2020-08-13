@@ -1,3 +1,4 @@
 [submodule "BcatBotFramework"]
 	path = BcatBotFramework
 	url = https://github.com/OatmealDome/BcatBotFramework.git
+	branch = jelonzo-fw-update
